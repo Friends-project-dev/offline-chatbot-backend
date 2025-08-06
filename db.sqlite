@@ -1,0 +1,23 @@
+import sqlite3
+
+conn = sqlite3.connect("db.sqlite")
+cursor = conn.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS sales (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product TEXT,
+    quantity INTEGER,
+    total REAL,
+    date TEXT
+);
+""")
+
+cursor.executemany("INSERT INTO sales (product, quantity, total, date) VALUES (?, ?, ?, DATE('now'))", [
+    ("Coffee", 3, 300.0),
+    ("Tea", 2, 200.0),
+    ("Juice", 5, 500.0)
+])
+
+conn.commit()
+conn.close()
