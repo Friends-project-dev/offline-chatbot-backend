@@ -1,5 +1,5 @@
 import streamlit as st
-from rag_helper import load_intents, get_sql_for_question, execute_sql_query
+from rag_helper import load_intents, get_response_or_sql, execute_sql_query
 
 st.title("🧠 Offline Chatbot (JSON + SQLite)")
 
@@ -10,11 +10,15 @@ if "intents" not in st.session_state:
     st.session_state.intents = load_intents()
 
 if user_input:
-    sql = get_sql_for_question(user_input, st.session_state.intents)
-    if sql:
-        st.code(sql, language="sql")
-        result = execute_sql_query(sql)
-        st.success("✅ Result:")
-        st.write(result)
+    match = get_response_or_sql(user_input, st.session_state.intents)
+    
+    if match:
+        if match["type"] == "response":
+            st.success(match["data"])  # humanised message
+        elif match["type"] == "sql":
+            st.code(match["data"], language="sql")
+            result = execute_sql_query(match["data"])
+            st.success("✅ Result:")
+            st.write(result)
     else:
-        st.warning("❌ No matching question found.")
+        st.warning("❌ Sorry, I didn't understand that. Try asking in a different way.")
