@@ -1,7 +1,7 @@
 [
   {
     "question": "gross sales today",
-    "sql": "SELECT SUM(total) as gross_sales FROM sales WHERE date = DATE('now');"
+    "sql": "SELECT SUM(total) FROM sales WHERE date = DATE('now');"
   },
   {
     "question": "number of orders today",
@@ -10,5 +10,17 @@
   {
     "question": "top 5 products",
     "sql": "SELECT product, SUM(quantity) as qty FROM sales GROUP BY product ORDER BY qty DESC LIMIT 5;"
+  },
+  {
+    "question": "hi",
+    "response": "👋 Hello! Welcome to the Offline Chatbot. How can I help you today?"
+  },
+  {
+    "question": "hello",
+    "response": "Hey there! 😊 Ask me something like 'gross sales today'."
+  },
+  {
+    "question": "who are you",
+    "response": "🤖 I'm your local AI assistant running fully offline!"
   }
 ]
