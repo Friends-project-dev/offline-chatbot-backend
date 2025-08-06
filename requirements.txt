@@ -1,4 +1,3 @@
 streamlit
 chromadb
 duckdb
-sqlite3  # Optional, most Python installs already have it
